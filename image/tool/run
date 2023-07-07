@@ -113,7 +113,9 @@ def xstr(s):
 def set_env_hostname_to_etc_hosts():
 	try:
 		if "HOSTNAME" in os.environ:
-			socket_hostname = socket.gethostname()
+			# fix https://github.com/osixia/docker-openldap/issues/252
+			# socket_hostname = socket.gethostname()
+			socket_hostname = socket.getfqdn()
 
 			if os.environ["HOSTNAME"] != socket_hostname:
 				ip_address = socket.gethostbyname(socket_hostname)
